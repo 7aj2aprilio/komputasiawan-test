@@ -2,7 +2,7 @@
 $host     = "tugas-php-server.postgres.database.azure.com";
 $dbname   = "tugas-php-database";
 $user     = "tmoblcyqdi@tugas-php-server";
-$password = "vT4daiQ$PuGsDrBA"; // jangan dipush ke GitHub ya
+$password = "7AJ2aprilio"; // jangan dipush ke GitHub ya
 
 $dsn = "pgsql:host=$host;port=5432;dbname=$dbname;sslmode=require";
 
