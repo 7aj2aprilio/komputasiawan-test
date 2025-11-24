@@ -4,16 +4,19 @@ include 'config.php';
 // Proses Delete
 if(isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    $query = "DELETE FROM mahasiswa WHERE id=$id";
+    $query = "DELETE FROM mahasiswa WHERE id = :id";
+    $stmt = $conn->prepare($query);
     
-    if(mysqli_query($conn, $query)) {
+    if($stmt->execute(['id' => $id])) {
         header("Location: index.php?msg=deleted");
         exit();
     }
 }
 
 // Ambil semua data
-$result = mysqli_query($conn, "SELECT * FROM mahasiswa ORDER BY id DESC");
+$stmt = $conn->prepare("SELECT * FROM mahasiswa ORDER BY id DESC");
+$stmt->execute();
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +75,7 @@ $result = mysqli_query($conn, "SELECT * FROM mahasiswa ORDER BY id DESC");
             <tbody>
                 <?php 
                 $no = 1;
-                while($row = mysqli_fetch_assoc($result)): 
+                foreach($result as $row): 
                 ?>
                 <tr>
                     <td><?= $no++ ?></td>
@@ -87,7 +90,7 @@ $result = mysqli_query($conn, "SELECT * FROM mahasiswa ORDER BY id DESC");
                         </div>
                     </td>
                 </tr>
-                <?php endwhile; ?>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
